@@ -1,10 +1,10 @@
 import Female from './data/avatar.jpg'
 import Male from './data/avatar2.jpg'
 import './index.css'
+import Add from './Add'
 
 
-
-const Employees = ({employee , h, handleEmployeeCardClick, team}) => {
+const Employees = ({employee , h, handleEmployeeCardClick, team , add, removeEmployee}) => {
     
   return (
     <div className="o">
@@ -18,7 +18,7 @@ const Employees = ({employee , h, handleEmployeeCardClick, team}) => {
         </div>
     <div className="om" >
      { employee.map(employees => 
-     <div key={employees.id} id={employees.id} onClick={handleEmployeeCardClick} className={( employees.teamName === team ? 'scout' : 's')}>
+     <div key={employees.id} id={employees.id} onClick={handleEmployeeCardClick} onDoubleClick={removeEmployee} className={( employees.teamName === team ? 'scout' : 's')}>
   
     {(employees.gender === 'male') ?<img src={Male}/>
                                  :<img src={Female} />
@@ -26,7 +26,7 @@ const Employees = ({employee , h, handleEmployeeCardClick, team}) => {
      <p>{employees.fullName}</p> 
     </div> )}
     </div>
-    
+    <Add add={add} />
     </div>
   )
 }

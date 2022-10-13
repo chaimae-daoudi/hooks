@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import Employees from './Employees';
 import Add from './Add';
 import Header from './Header';
+import Nav from './Nav';
+
 import {BrowserRouter as Router , Route , Routes} from 'react-router-dom'
 import GroupMemberTeam from './GroupMemberTeam';
 
@@ -108,14 +110,18 @@ useEffect(()=>{
 useEffect(()=>{
   localStorage.setItem('employeeList', JSON.stringify(employee))
 }, [employee]);
+
 function handleEmployeeCardClick(event) {
     const transformedEmployees = employee.map((emp) => emp.id === parseInt(event.currentTarget.id)
       ? (emp.teamName === team) ? { ...emp, teamName: '' } : { ...emp, teamName: team }
       : emp);
     setEmployee(transformedEmployees);
-
   }
- console.log(employee);
+ const removeEmployee =(event)=>{
+const remove = employee.filter((empl)=> empl.id !== parseInt(event.currentTarget.id))
+setEmployee(remove)
+ }
+
  const add =(id, fullName, gender, teamName )=>{
   setEmployee([...employee,{
     id: parseInt(id),
@@ -127,9 +133,10 @@ function handleEmployeeCardClick(event) {
 }
   return (
     <Router>
+      <Nav />
     <Header team = {team}
     teamNumber={employee.filter((e)=> e.teamName === team).length} />
-    <Add add={add}/>
+    
      <Routes>
       <Route path='/' 
       element={
@@ -138,12 +145,14 @@ function handleEmployeeCardClick(event) {
      handleEmployeeCardClick={handleEmployeeCardClick}
      h={h}
      team={team}
+     add={add}
+     removeEmployee={removeEmployee}
      />
       }/>
         
       <Route path='/GroupMemberTeam'
           element={
-            <GroupMemberTeam />
+            <GroupMemberTeam employee={employee} team={team} setTeam={setTeam}/>
           }/>
 
           

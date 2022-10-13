@@ -12,6 +12,10 @@ const [gender , setGender] = useState('')
 const addMember =(event)=>{
   event.preventDefault();
   add(id, fullName, gender, teamName);
+  setName('');
+  setGender('');
+  setTeams('');
+  setId('')
 }
   
   return (
